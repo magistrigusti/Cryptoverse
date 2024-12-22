@@ -7,15 +7,15 @@ const App = () => {
   return (
     <div className="app">
       <div className="navar">
-
+        <Navbar />
       </div>
 
       <div className="main">
-
+        Main
       </div>
 
       <div className="footer">
-
+        Footer
       </div>
     </div>
   )
