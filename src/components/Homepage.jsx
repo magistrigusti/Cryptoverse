@@ -2,10 +2,14 @@ import React from 'react';
 import millify from 'millify';
 import { Typography, Row, Col, Statistic } from 'antd';
 import { Link } from 'react-router-dom';
+import { useGetCryptosQuery } from '../services/cryptoApi';
 
 const { Title } = Typography;
 
 const Homepage = () => {
+  const { data} = useGetCryptosQuery();
+  console.log(data);
+
   return (
     <>
       <Title className="heading" level={2}>
