@@ -8,7 +8,8 @@ import { Cryptocurrencies, News} from '../components';
 const { Title } = Typography;
 
 const Homepage = () => {
-  const { data, isFetching} = useGetCryptosQuery();
+  const { data, isFetching} = useGetCryptosQuery(12);
+  console.log(data)
   const globalStats = data?.data?.stats;
 
   if (isFetching) return 'Loading...';
@@ -21,7 +22,7 @@ const Homepage = () => {
 
       <Row>
         <Col span={12}>
-          <Statistic title="Total Cryptocurrencies " value={globalStats.total} />
+          <Statistic title=" Total Cryptocurrencies " value={globalStats.total} />
         </Col>
 
         <Col>
@@ -43,7 +44,7 @@ const Homepage = () => {
 
       <div className="home-heading-container">
         <Title className="home-title" level={2} >
-          Top 10 Crypto currencies in the world
+          Top 12 Crypto currencies in the world
         </Title>
 
         <Title className="show-more">

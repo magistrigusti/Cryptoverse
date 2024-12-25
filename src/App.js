@@ -40,7 +40,7 @@ const App = () => {
             level={5}
             style={{ color: "white", textAlign: "center" }}
           >
-            Cryptoverse <br />
+            Joker Cryptoverse  <br />
             All rights reserverd
           </Typography.Title>
 
