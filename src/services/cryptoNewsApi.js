@@ -3,11 +3,11 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 // Заголовки API
 const cryptoNewsHeaders = {
   'x-rapidapi-key': '3454bd42c9msh63c0bbba9b04360p1d3819jsn7488e5931c28',
-  'x-rapidapi-host': 'crypto-news16.p.rapidapi.com',
+  'x-rapidapi-host': 'crypto-news16.p.rapidapi.com'
 };
 
 // Базовый URL API
-const baseUrl = 'https://crypto-news16.p.rapidapi.com/news/yahoo';
+const baseUrl = 'https://crypto-news16.p.rapidapi.com/news/cointelegraph';
 
 // Функция для создания запросов
 const createRequest = (url) => ({ url, headers: cryptoNewsHeaders });

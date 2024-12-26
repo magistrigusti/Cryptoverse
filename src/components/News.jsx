@@ -1,19 +1,14 @@
 import React from 'react';
-import { Select, Typography, Row, Col, Avatar, Card } from 'antd';
+import { Typography, Row, Col, Avatar, Card } from 'antd';
 import moment from 'moment';
 import { useGetCryptoNewsQuery } from '../services/cryptoNewsApi';
+import NewsImage from '../images/joker-poker.png';
 
 const { Text, Title } = Typography;
 
 const News = ({ simplified }) => {
-  const { data: cryptoNews, isFetching, error } = useGetCryptoNewsQuery({
-    newsCategory: 'Cryptocurrency', count: simplified ? 6 : 12
-  });
+  const { data: cryptoNews, isFetching, error } = useGetCryptoNewsQuery();
 
-  console.log("isFetching:", isFetching);
-  console.log("Error:", error);
-  console.log("Crypto News Data:", cryptoNews);
-  
   if (isFetching) return 'Loading...';
   if (error) return `Error occurred: ${error.message}`;
   if (!cryptoNews) return 'No data found';
@@ -26,11 +21,17 @@ const News = ({ simplified }) => {
             <a href={news.url} target="_blank" rel="noreferrer">
               <div className="news-image-container">
                 <Title className="news-title" level={4}>{news.title}</Title>
-                {news.image && (
-                  <img src={news.image} alt="news" />
-                )}
+                <img
+                  src={news.thumbnail || NewsImage}
+                  alt="news"
+                  style={{ width: '100px', height: '100px', objectFit: 'cover' }} // Установим размер изображений
+                />
               </div>
-              <p>{news.description}</p>
+              <p>
+                {news.description.length > 100 
+                  ? `${news.description.substring(0, 100)}...`
+                  : news.description}
+              </p>
               <div className="provider-container">
                 <div>
                   {news.provider && (
