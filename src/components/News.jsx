@@ -1,20 +1,35 @@
-import React from 'react';
-import { Typography, Row, Col, Avatar, Card } from 'antd';
+import React, { useState } from 'react';
+import { Select, Typography, Row, Col, Avatar, Card } from 'antd';
 import moment from 'moment';
+// import { useGetCryptosQuery } from '../services/cryptoApi';
 import { useGetCryptoNewsQuery } from '../services/cryptoNewsApi';
 import NewsImage from '../images/joker-poker.png';
 
 const { Text, Title } = Typography;
+const { Option } = Select;
 
 const News = ({ simplified }) => {
-  const { data: cryptoNews, isFetching, error } = useGetCryptoNewsQuery();
+  const [newsCategory, setNewsCategory] = useState("Cryptocurrency");
+  const { data: cryptoNews } = useGetCryptoNewsQuery({ newsCategory, count: simplified ? 6 : 12 });
 
-  if (isFetching) return 'Loading...';
-  if (error) return `Error occurred: ${error.message}`;
-  if (!cryptoNews) return 'No data found';
+
+  if (!cryptoNews?.value) return 'Loading...';
 
   return (
     <Row gutter={[24, 24]}>
+      {!simplified && (
+        <Col span={24}>
+          <Select className="select-news"
+            filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+            onChange={(value) => console.log(value)}
+            placeholder="Select a Crypto"
+            optionFilterProp="children"
+            showSearch
+          >
+            <Option></Option>
+          </Select>
+        </Col>
+      )}
       {cryptoNews.map((news, i) => (
         <Col key={i} xs={24} sm={12} lg={8}>
           <Card className="news-card" hoverable>
@@ -24,7 +39,7 @@ const News = ({ simplified }) => {
                 <img
                   src={news.thumbnail || NewsImage}
                   alt="news"
-                  style={{ width: '100px', height: '100px', objectFit: 'cover' }} // Установим размер изображений
+                  style={{ maxWidth: '200px', maxHeight: '100px', objectFit: 'cover', borderRadius: '10px' }} // Установим размер изображений
                 />
               </div>
               <p>
@@ -34,12 +49,8 @@ const News = ({ simplified }) => {
               </p>
               <div className="provider-container">
                 <div>
-                  {news.provider && (
-                    <>
-                      <Avatar src={news.provider.image} alt="news" />
-                      <Text className="provider-name">{news.provider.name}</Text>
-                    </>
-                  )}
+                  <Avatar src={news.thumbnail || NewsImage} />
+                  <Text className="provider-name">{news.name}</Text>
                 </div>
                 <Text>{moment(news.date).startOf('ss').fromNow()}</Text>
               </div>
