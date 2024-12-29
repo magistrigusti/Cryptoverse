@@ -23,7 +23,8 @@ const Cryptocurrencies = ({ simplified }) => {
     <>
       {!simplified && (
         <div className="search-crypto">
-          <Input placeholder="Search Cryptocurrency" 
+          <Input 
+            placeholder="Search Cryptocurrency" 
             onChange={(event) => setSearchTerm(event.target.value)}
           />
         </div>
@@ -31,12 +32,14 @@ const Cryptocurrencies = ({ simplified }) => {
 
       <Row className="crypto-card-container" gutter={[32, 32]}>
         {cryptos?.map((currency) => (
-          <Col className="crypto-card" 
+          <Col 
+            className="crypto-card" 
             xs={24} sm={12} lg={6}
-            key={currency.id}
+            key={currency.uuid}
           >
-            <Link to={`/crypto/${currency.id}`} >
-              <Card title={`${currency.rank}. ${currency.name}`}
+            <Link to={`/crypto/${currency.uuid}`}>
+              <Card 
+                title={`${currency.rank}. ${currency.name}`}
                 extra={<img className="crypto-image" src={currency.iconUrl} alt="" />}
                 hoverable
               >
