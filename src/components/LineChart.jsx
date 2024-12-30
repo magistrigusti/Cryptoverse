@@ -5,7 +5,6 @@ import { Col, Row, Typography } from 'antd';
 
 const { Title: AntTitle } = Typography;
 
-// Регистрация компонентов Chart.js
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const LineChart = ({ sparkline, currentPrice, coinName }) => {
@@ -13,19 +12,13 @@ const LineChart = ({ sparkline, currentPrice, coinName }) => {
   const coinTimestamp = [];
 
   if (sparkline && sparkline.length) {
-    // Временная метка генерируется для каждого значения
     for (let i = 0; i < sparkline.length; i += 1) {
-      if (sparkline[i] !== null) { // игнорируем null значения
+      if (sparkline[i] !== null) { 
         coinPrice.push(sparkline[i]);
         coinTimestamp.push(`Point ${i + 1}`);
       }
     }
   }
-
-  // Отладка данных для графика
-  console.log('Coin Price:', coinPrice);
-  console.log('Coin Timestamp:', coinTimestamp);
-
   const data = {
     labels: coinTimestamp,
     datasets: [
@@ -41,9 +34,13 @@ const LineChart = ({ sparkline, currentPrice, coinName }) => {
 
   const options = {
     scales: {
-      y: {
-        beginAtZero: false,
-      },
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      ]
     },
   };
 

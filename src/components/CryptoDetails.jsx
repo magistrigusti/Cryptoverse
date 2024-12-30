@@ -14,26 +14,21 @@ import {
 } from '@ant-design/icons';
 import { useGetCryptoDetailsQuery, useGetCryptoHistoryQuery } from '../services/cryptoApi';
 import LineChart from './LineChart';
+import Loader from './Loader';
 
 const { Title, Text } = Typography;
 const { Option } = Select;
 
 const CryptoDetails = () => {
   const { coinId } = useParams();
-  const [timePeriod, setTimePeriod] = useState("7d");
+  const [timePeriod, setTimePeriod] = useState("30d");
   const { data: cryptoDetailsData, isFetching: isFetchingDetails } = useGetCryptoDetailsQuery(coinId);
   const { data: coinHistoryData, isFetching: isFetchingHistory, error: historyError } = useGetCryptoHistoryQuery({ coinId, timePeriod });
 
   const cryptoDetails = cryptoDetailsData?.data?.coin;
-  const sparklineData = cryptoDetails?.sparkline;
+  const sparklineData = coinHistoryData?.data?.history || cryptoDetails?.sparkline;
 
-  console.log('Crypto Details:', cryptoDetails);
-  console.log('Sparkline Data:', sparklineData);
-  if(historyError) {
-    console.error('History Error:', historyError);
-  }
-
-  if (isFetchingDetails || isFetchingHistory) return 'Loading...';
+  if (isFetchingDetails || isFetchingHistory) return <Loader />;
 
   const time = ['3h', '24h', '7d', '30d', '1m', '3m', '1y', '3y', '5y'];
 

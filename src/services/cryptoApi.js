@@ -18,16 +18,17 @@ export const cryptoApi = createApi({
     getCryptos: builder.query({
       query: (count) => createRequest(`/coins?limit=${count}`),
     }),
+    getExchanges: builder.query({
+      query: () => createRequest(`/exchanges`),
+    }),
     getCryptoDetails: builder.query({
       query: (coinId) => createRequest(`/coin/${coinId}`),
     }),
     getCryptoHistory: builder.query({
       query: ({ coinId, timePeriod }) => {
-        console.log('Fetching history for', coinId, 'with time period', timePeriod);
         return createRequest(`/coin/${coinId}/history/${timePeriod}`);
       },
       transformResponse: (response) => {
-        console.log('Received history response:', response);
         return response;
       }
     }),
@@ -36,6 +37,7 @@ export const cryptoApi = createApi({
 
 export const {
   useGetCryptosQuery,
+  useGetExchangesQuery,
   useGetCryptoDetailsQuery,
   useGetCryptoHistoryQuery,
 } = cryptoApi;
